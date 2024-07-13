@@ -6,9 +6,9 @@ import json
 app = Flask(__name__)
 
 # Configure Flask app for MQTT settings
-app.config['MQTT_USER'] = 'your_mqtt_user'
-app.config['MQTT_PASSWORD'] = 'your_mqtt_password'
-app.config['MQTT_SERVER'] = 'your_mqtt_server'
+app.config['MQTT_USER'] = ''
+app.config['MQTT_PASSWORD'] = ''
+app.config['MQTT_SERVER'] = 'broker.emqx.io'
 app.config['MQTT_PORT'] = 1883
 app.config['MQTT_KEEPALIVE'] = 60
 
