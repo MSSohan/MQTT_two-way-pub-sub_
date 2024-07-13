@@ -1,4 +1,4 @@
-# MQTT-Client-Django
+# MQTT-Client-Flask
 
 [MQTT](https://mqtt.org/) is a lightweight IoT messaging protocol based on publish/subscribe model, which can provide real-time reliable messaging services for connected devices with very little code and bandwidth. It is widely used in industries such as IoT, mobile Internet, smart hardware, [Internet of vehicles](https://www.emqx.com/en/blog/category/internet-of-vehicles), and power and energy.
 
@@ -19,27 +19,8 @@ Python 3.11.0
 Install Django and `paho-mqtt` using Pip.
 
 ```
-pip install django
+pip install flask
 pip install paho-mqtt
-```
-
-Create a Django project.
-
-```
-django-admin startproject mqtt-test
-```
-
-The directory structure after creation is as follows.
-
-```
-├── manage.py
-└── mqtt_test
-  ├── __init__.py
-  ├── asgi.py
-  ├── settings.py
-  ├── urls.py
-  ├── views.py
-  └── wsgi.py
 ```
 
 ## Using paho-mqtt
@@ -125,55 +106,11 @@ client.connect(
     keepalive=settings.MQTT_KEEPALIVE
 )
 ```
-
-### Creating a message publishing API
-
-We create a simple POST API to implement MQTT message publishing.
-
-> In actual applications, the API code may require more complex business logic processing.
-
-Add the following code in `views.py`.
-
+### Run
 ```
-import json
-from django.http import JsonResponse
-from mqtt_test.mqtt import client as mqtt_client
-
-
-def publish_message(request):
-    request_data = json.loads(request.body)
-    rc, mid = mqtt_client.publish(request_data['topic'], request_data['msg'])
-    return JsonResponse({'code': rc})
+python server.py
+python client.py
 ```
-
-Add the following code in `urls.py`.
-
-```
-from django.urls import path
-from . import views
-
-urlpatterns = [
-    path('publish', views.publish_message, name='publish'),
-]
-```
-
-### Start the MQTT client
-
-Add the following code in `__init__.py`.
-
-```
-from . import mqtt
-mqtt.client.loop_start()
-```
-
-At this point, we have finished writing all the code, and the full code can be found at [GitHub](https://github.com/MSSohan/MQTT-Client-Django).
-
-Finally, execute the following command to run the Django project.
-
-```
-python manage.py runserver
-```
-
 When the Django application starts, the MQTT client will connect to the MQTT Broker and subscribe to the topic `uprint/kiosk`.
 
 ## Testing
